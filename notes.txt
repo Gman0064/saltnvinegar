@@ -1,0 +1,18 @@
+00E0    Clear screen
+00EE    RET
+        Sets the PC to the top of the stack, then subtracts 1 from the stack pointer
+1nnn    JMP, address
+2nnn    CALL address
+        Increments the stack pointer then puts the current PC on the top of the stack, the PC is then set to xxx
+3xkk    SE Vx, byte
+        Skip next instruction if Vx register == kk
+        Increments PC by 2
+4xkk    SNE Vx, byte
+        Skip next instruction if Vx register != kk
+        Increments PC by 2
+5xy0    SE Vx, Vy
+        Skip next instruction if Vx register == Vy register
+        Increments PC by 2
+6xkk    Ld Vx, Vy
+        Skip next instruction if Vx register == Vy register
+        Increments PC by 2
