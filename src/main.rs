@@ -5,6 +5,7 @@ use std::process::exit;
 
 // Module imports
 mod util;
+mod chip8;
 
 fn main()
 {
@@ -31,8 +32,24 @@ fn main()
         
         if contents.is_ok()
         {
-            let _bytes: &Vec<u8> = &contents.expect("");
-            // let magic_num: &[u8] = &bytes[0..4];   
+            let file_data: &Vec<u8> = &contents.expect("");
+            if file_data.len() > chip8::MAX_PRG_SIZE.into() {
+                eprintln!("Error loading file, program size too large!");
+                exit(1);  
+            }
+            else if file_data.len() == 0 {
+                eprintln!("Error loading file, no program data found!");
+                exit(1);
+            }
+
+            let mut program: [u8; chip8::MAX_PRG_SIZE] = [0; chip8::MAX_PRG_SIZE];
+            for i in 0..file_data.len() {
+                program[i] = file_data[i];
+            }
+
+            println!("Read {} bytes of program data", file_data.len());
+            chip8::start_emulation(program);
+            
         }
     } else
     {
